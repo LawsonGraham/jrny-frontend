@@ -1,7 +1,7 @@
 @tailwind base;
 @layer base {
   pinkButton {
-    @apply grid place-items-center bg-textPink text-white font-bold py-2 px-12 rounded-xl hover:bg-[#c71a6a] text-center w-full hover:scale-[103%] cursor-pointer;
+    @apply grid place-items-center bg-textPurple text-white font-bold py-2 px-12 rounded-xl hover:bg-hoverPurple text-center w-full hover:scale-[103%] cursor-pointer;
   }
 }
 @tailwind components;

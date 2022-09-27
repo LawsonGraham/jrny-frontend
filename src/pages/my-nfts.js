@@ -71,7 +71,7 @@ function MyAssets() {
                     Price - {nft.price} Eth
                   </p>
                   <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
-                    <button className="mt-4 w-full bg-textPink text-white font-bold py-2 px-12 rounded">
+                    <button className="mt-4 w-full bg-textPurple text-white font-bold py-2 px-12 rounded">
                       See NFT
                     </button>
                   </Link>

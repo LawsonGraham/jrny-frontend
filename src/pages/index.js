@@ -29,8 +29,8 @@ function Home({ data }) {
               name="upper-landing-left"
               className="flex flex-col justify-center"
             >
-              <h1 className="text-7xl font-bold text-textPink">
-                Welcome to Deed.
+              <h1 className="text-7xl font-bold text-textPurple">
+                Welcome to JRNY.
               </h1>
               <p className="text-xl font-bold pt-4 pl-4">
                 Democratizing cannabis industry engagement.

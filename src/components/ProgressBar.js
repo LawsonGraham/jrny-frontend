@@ -19,11 +19,11 @@ export default function ProgressBar(props) {
         <div className="mx-3">
           <div
             style={{ height: `${height / 4}rem` }}
-            className={`w-full rounded-md bg-pink-200 text-xs text-center align-text-bottom`}
+            className={`w-full rounded-md bg-purple-200 text-xs text-center align-text-bottom`}
           >
             <div
               style={{ width: `${Progress}%` }}
-              className={`h-full rounded-md bg-pink-500`}
+              className={`h-full rounded-md bg-purple-400`}
             ></div>
           </div>
         </div>

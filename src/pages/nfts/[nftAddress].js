@@ -209,7 +209,7 @@ function NFT() {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md
-                   border border-transparent shadow-sm px-4 py-2 bg-textPink
+                   border border-transparent shadow-sm px-4 py-2 bg-textPurple
                     text-base font-medium text-white hover:bg-red-700 
                     focus:outline-none focus:ring-2 focus:ring-offset-2
                      focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
@@ -344,7 +344,7 @@ function NFT() {
                     >
                       <pinkButton
                         name="pricing-buy-now"
-                        className="mt-4 w-full bg-textPink text-white font-bold p-2 rounded hover:scale-[103%]"
+                        className="mt-4 w-full bg-textPurple text-white font-bold p-2 rounded hover:scale-[103%]"
                         onClick={() => setShowChangePrice(true)}
                       >
                         Change Price
@@ -352,7 +352,7 @@ function NFT() {
 
                       <button
                         name="pricing-make-offer"
-                        className="mt-4 w-full bg-white text-textPink font-bold py-2 px-12 rounded border shadow hover:scale-[103%]"
+                        className="mt-4 w-full bg-white text-textPurple font-bold py-2 px-12 rounded border shadow hover:scale-[103%]"
                       >
                         Review Offers
                       </button>
@@ -370,7 +370,7 @@ function NFT() {
                       </pinkButton>
                       <button
                         name="pricing-make-offer"
-                        className="mt-4 w-full bg-white text-textPink font-bold py-2 px-12 rounded border shadow hover:scale-[103%]"
+                        className="mt-4 w-full bg-white text-textPurple font-bold py-2 px-12 rounded border shadow hover:scale-[103%]"
                       >
                         Make Offer
                       </button>

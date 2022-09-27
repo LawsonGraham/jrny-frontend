@@ -42,20 +42,20 @@ export default function Nav() {
   return (
     <nav className="flex flex-row border-b p-6">
       <p className="text-4xl font-bold pr-4 pl-2 basis-4/12 text-left">
-        Deed Crowdfunding
+        JRNY Crowdfunding
       </p>
       <div className="justify-center basis-3/12">
         <div className="mb-3 xl:w-96">
           <div className="input-group relative flex flex-row items-stretch w-full mb-4">
             <input
               type="search"
-              className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-textPink focus:outline-none"
+              className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-textPurple focus:outline-none"
               placeholder="Search"
               aria-label="Search"
               aria-describedby="button-addon2"
             />
             <button
-              className="btn inline-block px-6 py-2.5 bg-textPink text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-pink-600 hover:shadow-lg focus:bg-pink-600  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-pink-700 active:shadow-lg transition duration-150 ease-in-out flex items-center"
+              className="btn inline-block px-6 py-2.5 bg-textPurple text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-hoverPurple hover:shadow-lg focus:bg-hoverPurple  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-700 active:shadow-lg transition duration-150 ease-in-out flex items-center"
               type="button"
               id="button-addon2"
             >
@@ -80,17 +80,17 @@ export default function Nav() {
       </div>
       <div className="flex justify-between basis-5/12 gap-3 lg:mr-2 sm:mr-0 lg:ml-9 sm:ml-2">
         <Link href="/">
-          <a className="mt-2 text-textPink">Home</a>
+          <a className="mt-2 text-textPurple">Home</a>
         </Link>
         <Link href="/projects">
-          <a className="mt-2 text-textPink">Browse</a>
+          <a className="mt-2 text-textPurple">Browse</a>
         </Link>
         <Link href="/my-nfts">
-          <a className="mt-2 text-textPink">My NFTs</a>
+          <a className="mt-2 text-textPurple">My NFTs</a>
         </Link>
         {projectOwner && (
           <Link href="/dashboard">
-            <a className="mt-2 text-textPink">Dashboard</a>
+            <a className="mt-2 text-textPurple">Dashboard</a>
           </Link>
         )}
         <div className="h-10">

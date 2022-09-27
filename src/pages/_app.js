@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
         chains={chains}
         theme={lightTheme({
           font: 'system',
-          accentColor: '#E93F8E',
+          accentColor: '#c084fc',
           borderRadius: 'large',
         })}
       >

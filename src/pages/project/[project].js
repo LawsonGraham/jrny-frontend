@@ -90,7 +90,7 @@ function Project({ nftsData, projectData }) {
                 <div className="basis-3/12 justify center"></div>
                 <button
                   className={`bg-${
-                    active === 'ACTIVE' ? 'textPink' : 'black'
+                    active === 'ACTIVE' ? 'textPurple' : 'black'
                   } text-white font-bold py-1 px-2 rounded-xl text-sm`}
                 >
                   {' '}

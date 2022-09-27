@@ -36,7 +36,7 @@ const Carousel = (props) => {
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
-          stroke="#E93F8E"
+          stroke="#c084fc"
           className="w-12 h-12 hover:scale-[105%]"
         >
           <path
@@ -89,7 +89,7 @@ const Carousel = (props) => {
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
-          stroke="#E93F8E"
+          stroke="#c084fc"
           className="w-12 h-12 hover:scale-[105%]"
         >
           <path
