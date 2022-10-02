@@ -1,9 +1,6 @@
 /* pages/my-nfts.js */
-import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
-import Web3Modal from 'web3modal';
 import { useRouter } from 'next/router';
 import { useAccount } from 'wagmi';
 
@@ -59,11 +56,13 @@ function MyAssets() {
           {' '}
           Your NFTs
         </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+        <div>
+        
           {Object.keys(nfts).length === 0 ? (
-            <h1 className="py-10 px-20 text-3xl"> No NFTs owned </h1>
+            <h1 className="py-10 px-20 text-3xl">Please Connect Your Wallet To See Your NFTs! </h1>
           ) : (
-            nfts.map((nft, i) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+            {nfts.map((nft, i) => (
               <div key={i} className="border shadow rounded-xl overflow-hidden">
                 <img src={nft.imageLink} className="w-full h-[71%]" />
                 <div className="p-4 bg-black">
@@ -77,9 +76,10 @@ function MyAssets() {
                   </Link>
                 </div>
               </div>
-            ))
+            ))}</div>
           )}
         </div>
+        
       </div>
     </div>
   );

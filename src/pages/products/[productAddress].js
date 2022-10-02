@@ -1,17 +1,21 @@
+import { ethers } from 'ethers';
 import { Fragment, useRef, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import axios from 'axios';
+import Web3Modal from 'web3modal';
 import List from '../../components/List';
 import { useAccount } from 'wagmi';
 
-function NFT() {
+function Product() {
   const router = useRouter();
-  const { nftAddress } = router.query;
-  const [NFT, setNFT] = useState([]);
+  const { productAddress } = router.query;
+  const [Product, setProduct] = useState([]);
   const [projectData, setProjectData] = useState([]);
+  const [projectProducts, setProjectProducts] = useState([]);
   const [projectNFTs, setProjectNFTs] = useState([]);
-  const [showProjNFTs, setShowProjNFTs] = useState(true);
+  const [showProjProducts, setShowProjProducts] = useState(true);
   const [showDescription, setShowDescription] = useState(true);
   const [showTxns, setShowTxns] = useState(true);
   const [showChangePrice, setShowChangePrice] = useState(false);
@@ -22,17 +26,17 @@ function NFT() {
   const [loadingState, setLoadingState] = useState('not-loaded');
   useEffect(() => {
     loadData();
-  }, [nftAddress, loadingState]);
+  }, [productAddress, loadingState]);
 
   const cancelButtonRef = useRef(null);
 
   async function loadData() {
     const nftRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/${nftAddress}`
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/product/${productAddress}`
     );
     const nftData = await nftRes.json();
-    setNFT(nftData);
-    console.log(NFT);
+    setProduct(nftData);
+    console.log(Product);
     const projRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${nftData.projecturl}`
     );
@@ -45,15 +49,23 @@ function NFT() {
     const projectNFTs = await projNFTsRes.json();
     setProjectNFTs(projectNFTs.slice(0, 8));
     setLoadingState('loaded');
+
+    const projProductsRes = await fetch(
+      // add project/${nftData.projecturl} to have just the project's nft
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/product/project/${nftData.projecturl}`
+    );
+    const projectProducts = await projProductsRes.json();
+    setProjectProducts(projectProducts.slice(0, 8));
+    setLoadingState('loaded');
   }
 
-  async function updateNFTPrice(inputPrice) {
+  async function updateProductPrice(inputPrice) {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/patchNFTPrice`,
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/patchProductPrice`,
       {
         method: 'PATCH',
         body: new URLSearchParams({
-          address: NFT.address,
+          address: Product.address,
           price: inputPrice,
         }),
         headers: {
@@ -66,8 +78,8 @@ function NFT() {
     console.log('complete');
   }
 
-  if (loadingState === 'loaded' && Object.keys(NFT).length === 0)
-    return <h1 className="px-20 py-10 text-3xl">NFT not found...</h1>;
+  if (loadingState === 'loaded' && Object.keys(Product).length === 0)
+    return <h1 className="px-20 py-10 text-3xl">Product not found...</h1>;
 
   return (
     <>
@@ -145,14 +157,14 @@ function NFT() {
                           </div>
                           <div>
                             <p className="text-4xl font-bold">
-                              {NFT.price} XRPL
+                              {Product.price} XRPL
                             </p>
                           </div>
                           <div className="flex flex-col-reverse p-1 text-fontBG">
                             <p className="text-l">
                               {' '}
                               &#40;$
-                              {Math.round(NFT.price * .532 * 100) / 100}&#41;
+                              {Math.round(Product.price * .532 * 100) / 100}&#41;
                             </p>
                           </div>
                         </div>
@@ -176,7 +188,7 @@ function NFT() {
                             />
                           </div>
                           <input
-                            placeholder={NFT.price}
+                            placeholder={Product.price}
                             value={inputPriceChange}
                             onInput={(e) => setInputPriceChange(e.target.value)}
                             className="text-4xl font-bold max-w-[7rem]"
@@ -213,7 +225,7 @@ function NFT() {
                     onClick={() => {
                       if (inputPriceChange) {
                         setShowChangePrice(false);
-                        updateNFTPrice(inputPriceChange);
+                        updateProductPrice(inputPriceChange);
                         setShowEmptyPriceError(false);
                         setInputPriceChange('');
                       } else {
@@ -248,7 +260,7 @@ function NFT() {
             <div name="left-panel-upper" className="basis-5/12 p-2 space-y-3">
               <div>
                 <div className="border shadow rounded-xl overflow-hidden ">
-                  <img className="w-full" src={NFT.imageLink} />
+                  <img className="w-full" src={Product.imageLink} />
                 </div>
               </div>
               <div
@@ -277,7 +289,7 @@ function NFT() {
                 className="overflow-hidden p-2"
               >
                 <div className="cursor-pointer">
-                  <Link href={`/project/${NFT.projecturl}`}>
+                  <Link href={`/project/${Product.projecturl}`}>
                     <div className="flex flex-row">
                       <a className=" text-blue-500 font-bold pr-2">
                         {projectData.name}
@@ -299,7 +311,7 @@ function NFT() {
                 </div>
 
                 <div className="grid gap-4 font-bold text-4xl pt-3">
-                  {NFT.nftName}
+                  {Product.nftName}
                 </div>
               </section>
               <section
@@ -325,36 +337,15 @@ function NFT() {
                       />
                     </div>
                     <div>
-                      <p className="text-4xl font-bold">{NFT.price} XRPL</p>
+                      <p className="text-4xl font-bold">{Product.price} XRPL</p>
                     </div>
                     <div className="flex flex-col-reverse p-1 text-fontBG">
                       <p className="text-l">
                         {' '}
-                        &#40;${Math.round(NFT.price * .532 * 100) / 100}&#41;
+                        &#40;${Math.round(Product.price * .532 * 100) / 100}&#41;
                       </p>
                     </div>
                   </div>
-                  {address && NFT.owner === address ? (
-                    <div
-                      name="pricing-offer-buttons"
-                      className="flex row p-2 space-x-2"
-                    >
-                      <pinkButton
-                        name="pricing-buy-now"
-                        className="mt-4 w-full bg-textPurple text-white font-bold p-2 rounded hover:scale-[103%]"
-                        onClick={() => setShowChangePrice(true)}
-                      >
-                        Change Price
-                      </pinkButton>
-
-                      <button
-                        name="pricing-make-offer"
-                        className="mt-4 w-full bg-white text-textPurple font-bold py-2 px-12 rounded border shadow hover:scale-[103%]"
-                      >
-                        Review Offers
-                      </button>
-                    </div>
-                  ) : (
                     <div
                       name="pricing-offer-buttons"
                       className="flex row p-2 space-x-2"
@@ -363,16 +354,15 @@ function NFT() {
                         name="pricing-buy-now"
                         className="mt-4 p-2 rounded hover:scale-[103%]"
                       >
-                        Buy Now
+                        Order Now
                       </pinkButton>
                       <button
                         name="pricing-make-offer"
-                        className="mt-4 w-full bg-white text-textPurple font-bold py-2 px-12 rounded border shadow hover:scale-[103%]"
+                        className="mt-4 w-full bg-white text-textPurple font-bold py-2 px-12 rounded border shadow hover:scale-[103%] hover:bg-gray-100"
                       >
-                        Make Offer
+                        Add To Cart
                       </button>
                     </div>
-                  )}
                 </div>
               </section>
               <section
@@ -383,24 +373,32 @@ function NFT() {
                   className="p-3 font-bold bg-bgHeader w-full text-xl"
                   onClick={() => setShowTxns(!showTxns)}
                 >
-                  Previous Transactions
+                  Product Promotional NFTs
                 </button>
-                {showTxns && Object.keys(NFT).length !== 0 && (
-                  <div className="flex flex-col bg-bgSubsection">
-                    <div className="flex flex-row divide-x-3 justify-between block px-4 py-2 border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 cursor-pointer">
-                      <div className="basis-1/3">
-                        <p className="text-center font-bold">Price</p>
-                      </div>
-                      <div className="basis-1/3">
-                        <p className="text-center font-bold">Reciever</p>
-                      </div>
-                      <div className="basis-1/3">
-                        <p className="text-center font-bold">Sender</p>
-                      </div>
+                <div className='grid grid-cols-3'>
+                {projectNFTs.slice(0,3).map((nft, i) => (
+                      <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
+                        <div
+                          key={i}
+                          className="flex flex-col-reverse shadow rounded-xl overflow-hidden object-contain bg-bgSubsection"
+                        >
+                          <div className="p-4 basis-[1/6]">
+                            <p
+                              style={{ height: '32px' }}
+                              className="text-xl text-center font-semibold line-clamp-1"
+                            >
+                              {nft.nftName}
+                            </p>
+                          </div>
+
+                          <img
+                            src={nft.imageLink}
+                            className="object-fill mx-auto hover:scale-110 rounded-xl cursor-pointer w-full h-[85%]"
+                          />
+                        </div>
+                      </Link>
+                    ))}
                     </div>
-                    <List listContents={NFT.transactions} />
-                  </div>
-                )}
               </section>
             </div>
           </div>
@@ -411,14 +409,14 @@ function NFT() {
         >
           <button
             className="p-3 font-bold bg-bgHeader w-full text-xl"
-            onClick={() => setShowProjNFTs(!showProjNFTs)}
+            onClick={() => setShowProjProducts(!showProjProducts)}
           >
-            More NFTs From {projectData.name}
+            More You'd Like From {projectData.name}
           </button>
-          {showProjNFTs && (
+          {showProjProducts && (
             <div className="grid grid-cols-4 gap-4 p-4 bg-bgSubsection">
-              {projectNFTs.slice(0,4).map((nft, i) => (
-                <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
+              {projectProducts.slice(0,4).map((nft, i) => (
+                <Link href={{ pathname: `/products/${nft.address}` }} key={i}>
                   <div
                     key={i}
                     className=" shadow rounded-xl overflow-hidden object-contain bg-bgPageDefault"
@@ -446,4 +444,4 @@ function NFT() {
   );
 }
 
-export default NFT;
+export default Product;

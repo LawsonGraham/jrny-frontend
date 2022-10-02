@@ -1,8 +1,5 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
-import Web3Modal from 'web3modal';
-import WalletConnectProvider from '@walletconnect/web3-provider';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 
@@ -42,7 +39,7 @@ export default function Nav() {
   return (
     <nav className="flex flex-row border-b p-6">
       <p className="text-4xl font-bold pr-4 pl-2 basis-4/12 text-left">
-        JRNY Crowdfunding
+        JRNY Ecosystem
       </p>
       <div className="justify-center basis-3/12">
         <div className="mb-3 xl:w-96">
@@ -82,8 +79,11 @@ export default function Nav() {
         <Link href="/">
           <a className="mt-2 text-textPurple">Home</a>
         </Link>
+        <Link href="/products">
+          <a className="mt-2 text-textPurple">Order</a>
+        </Link>
         <Link href="/projects">
-          <a className="mt-2 text-textPurple">Browse</a>
+          <a className="mt-2 text-textPurple">Projects</a>
         </Link>
         <Link href="/my-nfts">
           <a className="mt-2 text-textPurple">My NFTs</a>

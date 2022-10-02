@@ -181,8 +181,8 @@ function Projects() {
                     <p className="text-md font-bold text-black pt-2 basis-7/12">
                       {Math.round(
                         (project.raiseGoal / project.totalShares) * 10000
-                      ) / 10000}{' '}
-                      ETH / Share
+                      ) / 10}{' '}
+                      XRPL / Share
                     </p>
                   </div>
                   <div className="flex flex-row">

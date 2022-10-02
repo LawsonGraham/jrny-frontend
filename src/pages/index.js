@@ -33,12 +33,12 @@ function Home({ data }) {
                 Welcome to JRNY.
               </h1>
               <p className="text-xl font-bold pt-4 pl-4">
-                Democratizing cannabis industry engagement.
+                Changing all aspects of the cannabis sector.
               </p>
               <p className="text-xl font-bold pl-4">
                 Powered by the Blockchain.
               </p>
-              <Link href={`/projects`}>
+              <Link href={`/products`}>
                 <pinkButton className="grid place-items-center mt-4 w-1/4 py-2 px-12 rounded-xl ml-10">
                   Browse
                 </pinkButton>

@@ -1,10 +1,5 @@
 /* pages/dashboard.js */
-import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import Web3Modal from 'web3modal';
-import { Cookies } from 'react-cookie';
-import { useCookies } from 'react-cookie';
 import ProgressBar from '../components/ProgressBar';
 import NftList from '../components/NftList';
 import Link from 'next/link';
@@ -109,12 +104,12 @@ export default function CreatorDashboard() {
                     >
                       <div className="flex flex-row basis-1/2 justify-between mx-10">
                         <p className="font-semibold">Raise Goal: </p>
-                        <p>{project.raiseGoal.toLocaleString('en-US')} ETH</p>
+                        <p>{project.raiseGoal.toLocaleString('en-US')} XRPL</p>
                       </div>
                       <div className="flex flex-row basis-1/2 justify-between mx-10">
                         <p className="font-semibold">Amount Raised: </p>
                         <p>
-                          {project.raiseCurrent.toLocaleString('en-US')} ETH
+                          {project.raiseCurrent.toLocaleString('en-US')} XRPL
                         </p>
                       </div>
                     </div>
@@ -136,7 +131,7 @@ export default function CreatorDashboard() {
                               (project.raiseGoal * 10000) / project.totalShares
                             ) / 10000
                           ).toLocaleString('en-US')}{' '}
-                          ETH
+                          XRPL
                         </p>
                       </div>
                     </div>
@@ -149,7 +144,7 @@ export default function CreatorDashboard() {
                       </p>
                       <div className="basis-[4%]"></div>
                       <p className="basis-4/12 text-center">
-                        {project.minInvestment} ETH
+                        {project.minInvestment} XRPL
                       </p>
                       <div className="basis-[3%]"></div>
 

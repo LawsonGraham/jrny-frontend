@@ -1,11 +1,6 @@
-import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import axios from 'axios';
-import Web3Modal from 'web3modal';
 import ProgressBar from '../../components/ProgressBar';
-import { setActive } from '@material-tailwind/react/components/Tabs/TabsContext';
 import InfoList from '../../components/InfoList';
 
 function Project({ nftsData, projectData }) {
@@ -128,16 +123,16 @@ function Project({ nftsData, projectData }) {
                       className="text-4xl font-bold w-[6rem] mr-1"
                     ></input>
                     <div>
-                      <p className="text-4xl font-bold">ETH</p>
+                      <p className="text-4xl font-bold">XRPL</p>
                     </div>
                     <div className="flex flex-col-reverse p-1 text-fontBG min-w-[4.3rem]">
                       <p className="text-l">
                         {' '}
                         &#40;$
-                        {inputPriceChange * 1445.56 < 10000
-                          ? Math.round(inputPriceChange * 1445.56)
-                          : Math.round((inputPriceChange * 1445.56) / 100) /
-                              10 +
+                        {inputPriceChange * .532 < 10000
+                          ? Math.round(inputPriceChange * .532 *100) / 100
+                          : Math.round((inputPriceChange * .532) * 100) /
+                              100 +
                             'K'}
                         &#41;
                       </p>
@@ -184,7 +179,7 @@ function Project({ nftsData, projectData }) {
                     {project.raiseCurrent < 1000
                       ? Math.round(project.raiseCurrent)
                       : Math.round(project.raiseCurrent / 100) / 10 + 'K'}{' '}
-                    ETH
+                    XRPL
                   </div>
                 </div>
               </div>

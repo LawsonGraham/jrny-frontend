@@ -27,8 +27,8 @@ export default function InfoList(props) {
         <div className="basis-7/12">
           <p className="text-center">
             {Math.round((project.raiseGoal / project.totalShares) * 10000) /
-              10000}{' '}
-            ETH
+              10}{' '}
+            XRPL
           </p>
         </div>
       </div>
@@ -37,7 +37,7 @@ export default function InfoList(props) {
           <p className="font-bold">Minimum Investment: </p>
         </div>
         <div className="basis-7/12">
-          <p className="text-center">{project.minInvestment} ETH</p>
+          <p className="text-center">{project.minInvestment} XRPL</p>
         </div>
       </div>
       <div className="flex flex-row divide-x-3 justify-between block px-4 py-2 border border-gray-200 w-full focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
@@ -46,7 +46,7 @@ export default function InfoList(props) {
         </div>
         <div className="basis-7/12">
           <p className="text-center">
-            {project.raiseGoal.toLocaleString('en-US')} ETH{' '}
+            {project.raiseGoal.toLocaleString('en-US')} XRPL{' '}
           </p>
         </div>
       </div>
@@ -56,7 +56,7 @@ export default function InfoList(props) {
         </div>
         <div className="basis-7/12">
           <p className="text-center">
-            {project.raiseCurrent.toLocaleString('en-US')} ETH
+            {project.raiseCurrent.toLocaleString('en-US')} XRPL
           </p>
         </div>
       </div>

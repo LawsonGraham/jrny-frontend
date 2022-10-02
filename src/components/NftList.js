@@ -29,7 +29,7 @@ export default function NftList(props) {
             </div>
             <div className="basis-1/3">
               <p className="text-center">
-                {nft.price ? nft.price + ' ETH' : ''}{' '}
+                {nft.price ? nft.price + ' XRPL' : ''}{' '}
               </p>
             </div>
           </div>
