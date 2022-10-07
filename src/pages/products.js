@@ -30,6 +30,7 @@ function Products() {
   }
 
   async function filterProducts() {
+    try {
     const productsRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/product/?` +
         new URLSearchParams({
@@ -51,15 +52,24 @@ function Products() {
     console.log(productData);
     setProducts(Object.keys(productData).length !== 0 ? productData : []);
     setLoadingState('loaded');
+    } catch (e) {
+      setProducts([])
+      setLoadingState('loaded')
+    }
   }
 
   async function loadProducts() {
+    try{
     const productsRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/product/`
     );
     const productData = await productsRes.json();
     setProducts(Object.keys(productData).length !== 0 ? productData : []);
     setLoadingState('loaded');
+    } catch (e) {
+      setProducts([]);
+      setLoadingState('loaded');
+    }
   }
 
   return (

@@ -31,6 +31,7 @@ function Product() {
   const cancelButtonRef = useRef(null);
 
   async function loadData() {
+    try {
     const nftRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/product/${productAddress}`
     );
@@ -48,8 +49,6 @@ function Product() {
     );
     const projectNFTs = await projNFTsRes.json();
     setProjectNFTs(projectNFTs.slice(0, 8));
-    setLoadingState('loaded');
-
     const projProductsRes = await fetch(
       // add project/${nftData.projecturl} to have just the project's nft
       `${process.env.NEXT_PUBLIC_API_URL}/v1/product/project/${nftData.projecturl}`
@@ -57,6 +56,12 @@ function Product() {
     const projectProducts = await projProductsRes.json();
     setProjectProducts(projectProducts.slice(0, 8));
     setLoadingState('loaded');
+  } catch (e) {
+    setProduct({});
+    setProjectData([]);
+    setProjectNFTs([]);
+    setProjectProducts([]);
+  }
   }
 
   async function updateProductPrice(inputPrice) {

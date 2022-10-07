@@ -9,15 +9,20 @@ export default function Nav() {
   const { address } = useAccount();
 
   const getOwners = async () => {
-    const ownersRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/project/`
-    );
-    const ownersData = await ownersRes.json();
-    let ownersArray = [];
-    for (let i = 0; i < ownersData.length; i++) {
-      ownersArray.push(ownersData[i].owner);
+    try {
+      const ownersRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/`
+      );
+      const ownersData = await ownersRes.json();
+      let ownersArray = [];
+      for (let i = 0; i < ownersData.length; i++) {
+        ownersArray.push(ownersData[i].owner);
+      }
+      setOwners(ownersArray);
+    } 
+    catch (e) {
+      setOwners([])
     }
-    setOwners(ownersArray);
   };
 
   const checkOwner = async () => {

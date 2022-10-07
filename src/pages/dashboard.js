@@ -15,6 +15,7 @@ export default function CreatorDashboard() {
     loadProjects();
   }, [address]);
   async function loadProjects() {
+    try{
     const projectsRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/project/?` +
         new URLSearchParams({
@@ -39,6 +40,10 @@ export default function CreatorDashboard() {
     }
     setProjects(Object.keys(projectData).length !== 0 ? projectData : []);
     setLoadingState('loaded');
+  } catch (e) {
+    setProjects([])
+    setLoadingState('loaded')
+  }
   }
 
   if (loadingState === 'loaded' && !projects.length)

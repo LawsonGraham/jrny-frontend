@@ -27,7 +27,7 @@ function Project({ nftsData, projectData }) {
   // }
 
   async function investInProject(inputPrice) {
-    return;
+    try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/patchNFTPrice`,
       {
@@ -44,6 +44,9 @@ function Project({ nftsData, projectData }) {
       .then((response) => response.json())
       .then((json) => console.log(json));
     console.log('complete');
+    } catch (e) {
+      console.log('cannot update price')
+    }
   }
 
   if (
@@ -240,6 +243,7 @@ function Project({ nftsData, projectData }) {
 export async function getServerSideProps(ctx) {
   // Fetch data from external API
   const projectURL = ctx.query.project;
+  try {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${projectURL}`
   );
@@ -249,7 +253,10 @@ export async function getServerSideProps(ctx) {
     `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${projectURL}`
   );
   const projectData = await projectRes.json();
-
+  } catch (e) {
+    const nftsData = [];
+    const projectData = [];
+  }
   // Pass data to the page via props
   return { props: { nftsData, projectData } };
 }

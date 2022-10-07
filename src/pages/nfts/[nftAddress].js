@@ -27,12 +27,12 @@ function NFT() {
   const cancelButtonRef = useRef(null);
 
   async function loadData() {
+    try {
     const nftRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/${nftAddress}`
     );
     const nftData = await nftRes.json();
     setNFT(nftData);
-    console.log(NFT);
     const projRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${nftData.projecturl}`
     );
@@ -45,6 +45,12 @@ function NFT() {
     const projectNFTs = await projNFTsRes.json();
     setProjectNFTs(projectNFTs.slice(0, 8));
     setLoadingState('loaded');
+  } catch (e) {
+    setNFT({});
+    setProjectData([]);
+    setProjectNFTs([]);
+    setLoadingState('loaded');
+  }
   }
 
   async function updateNFTPrice(inputPrice) {

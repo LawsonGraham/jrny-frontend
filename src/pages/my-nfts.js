@@ -14,7 +14,7 @@ function MyAssets() {
     if (!address) {
       return null;
     }
-    console.log(address ? address.toLowerCase() : '');
+    try {
     const nftRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/owner/?` +
         new URLSearchParams({
@@ -30,6 +30,10 @@ function MyAssets() {
     const nftData = await nftRes.json();
     setNfts(Object.keys(nftData).length !== 0 ? nftData : []);
     setLoadingState('loaded');
+    } catch (e) {
+      setNfts([])
+      setLoadingState('loaded')
+    }
   }
 
   useEffect(() => {

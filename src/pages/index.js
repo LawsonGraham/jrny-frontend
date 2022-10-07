@@ -123,9 +123,13 @@ function Home({ data }) {
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/project/`);
-  const data = await res.json();
-
+  let data = [];
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/project/`);
+    data = await res.json();
+  } catch (e) {
+  }
+  
   // Pass data to the page via props
   return { props: { data } };
 }
