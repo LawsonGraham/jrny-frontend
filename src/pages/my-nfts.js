@@ -15,24 +15,24 @@ function MyAssets() {
       return null;
     }
     try {
-    const nftRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/owner/?` +
-        new URLSearchParams({
-          owner: address ? address : '',
-        }),
-      {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
-        },
-      }
-    );
-    const nftData = await nftRes.json();
-    setNfts(Object.keys(nftData).length !== 0 ? nftData : []);
-    setLoadingState('loaded');
+      const nftRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/owner/?` +
+          new URLSearchParams({
+            owner: address ? address : '',
+          }),
+        {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded',
+          },
+        }
+      );
+      const nftData = await nftRes.json();
+      setNfts(Object.keys(nftData).length !== 0 ? nftData : []);
+      setLoadingState('loaded');
     } catch (e) {
-      setNfts([])
-      setLoadingState('loaded')
+      setNfts([]);
+      setLoadingState('loaded');
     }
   }
 
@@ -61,29 +61,33 @@ function MyAssets() {
           Your NFTs
         </h1>
         <div>
-        
           {Object.keys(nfts).length === 0 ? (
-            <h1 className="py-10 px-20 text-3xl">Please Connect Your Wallet To See Your NFTs! </h1>
+            <h1 className="py-10 px-20 text-3xl">
+              Please Connect Your Wallet To See Your NFTs!{' '}
+            </h1>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-            {nfts.map((nft, i) => (
-              <div key={i} className="border shadow rounded-xl overflow-hidden">
-                <img src={nft.imageLink} className="w-full h-[71%]" />
-                <div className="p-4 bg-black">
-                  <p className="text-2xl font-bold text-white">
-                    Price - {nft.price} Eth
-                  </p>
-                  <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
-                    <button className="mt-4 w-full bg-textPurple text-white font-bold py-2 px-12 rounded">
-                      See NFT
-                    </button>
-                  </Link>
+              {nfts.map((nft, i) => (
+                <div
+                  key={i}
+                  className="border shadow rounded-xl overflow-hidden"
+                >
+                  <img src={nft.imageLink} className="w-full h-[71%]" />
+                  <div className="p-4 bg-black">
+                    <p className="text-2xl font-bold text-white">
+                      Price - {nft.price} Eth
+                    </p>
+                    <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
+                      <button className="mt-4 w-full bg-textPurple text-white font-bold py-2 px-12 rounded">
+                        See NFT
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}</div>
+              ))}
+            </div>
           )}
         </div>
-        
       </div>
     </div>
   );

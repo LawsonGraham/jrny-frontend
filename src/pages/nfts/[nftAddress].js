@@ -28,29 +28,29 @@ function NFT() {
 
   async function loadData() {
     try {
-    const nftRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/${nftAddress}`
-    );
-    const nftData = await nftRes.json();
-    setNFT(nftData);
-    const projRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${nftData.projecturl}`
-    );
-    const projectData = await projRes.json();
-    setProjectData(projectData);
-    const projNFTsRes = await fetch(
-      // add project/${nftData.projecturl} to have just the project's nft
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${nftData.projecturl}`
-    );
-    const projectNFTs = await projNFTsRes.json();
-    setProjectNFTs(projectNFTs.slice(0, 8));
-    setLoadingState('loaded');
-  } catch (e) {
-    setNFT({});
-    setProjectData([]);
-    setProjectNFTs([]);
-    setLoadingState('loaded');
-  }
+      const nftRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/${nftAddress}`
+      );
+      const nftData = await nftRes.json();
+      setNFT(nftData);
+      const projRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${nftData.projecturl}`
+      );
+      const projectData = await projRes.json();
+      setProjectData(projectData);
+      const projNFTsRes = await fetch(
+        // add project/${nftData.projecturl} to have just the project's nft
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${nftData.projecturl}`
+      );
+      const projectNFTs = await projNFTsRes.json();
+      setProjectNFTs(projectNFTs.slice(0, 8));
+      setLoadingState('loaded');
+    } catch (e) {
+      setNFT({});
+      setProjectData([]);
+      setProjectNFTs([]);
+      setLoadingState('loaded');
+    }
   }
 
   async function updateNFTPrice(inputPrice) {
@@ -158,7 +158,7 @@ function NFT() {
                             <p className="text-l">
                               {' '}
                               &#40;$
-                              {Math.round(NFT.price * .532 * 100) / 100}&#41;
+                              {Math.round(NFT.price * 0.532 * 100) / 100}&#41;
                             </p>
                           </div>
                         </div>
@@ -194,8 +194,7 @@ function NFT() {
                             <p className="text-l">
                               {' '}
                               &#40;$
-                              {Math.round(inputPriceChange * .532 * 100) /
-                                100}
+                              {Math.round(inputPriceChange * 0.532 * 100) / 100}
                               &#41;
                             </p>
                           </div>
@@ -336,7 +335,7 @@ function NFT() {
                     <div className="flex flex-col-reverse p-1 text-fontBG">
                       <p className="text-l">
                         {' '}
-                        &#40;${Math.round(NFT.price * .532 * 100) / 100}&#41;
+                        &#40;${Math.round(NFT.price * 0.532 * 100) / 100}&#41;
                       </p>
                     </div>
                   </div>
@@ -423,7 +422,7 @@ function NFT() {
           </button>
           {showProjNFTs && (
             <div className="grid grid-cols-4 gap-4 p-4 bg-bgSubsection">
-              {projectNFTs.slice(0,4).map((nft, i) => (
+              {projectNFTs.slice(0, 4).map((nft, i) => (
                 <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
                   <div
                     key={i}

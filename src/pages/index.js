@@ -127,9 +127,8 @@ export async function getServerSideProps() {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/project/`);
     data = await res.json();
-  } catch (e) {
-  }
-  
+  } catch (e) {}
+
   // Pass data to the page via props
   return { props: { data } };
 }

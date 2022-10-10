@@ -26,8 +26,7 @@ export default function InfoList(props) {
         </div>
         <div className="basis-7/12">
           <p className="text-center">
-            {Math.round((project.raiseGoal / project.totalShares) * 10000) /
-              10}{' '}
+            {Math.round((project.raiseGoal / project.totalShares) * 10000) / 10}{' '}
             XRPL
           </p>
         </div>

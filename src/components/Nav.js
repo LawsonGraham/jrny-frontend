@@ -19,9 +19,8 @@ export default function Nav() {
         ownersArray.push(ownersData[i].owner);
       }
       setOwners(ownersArray);
-    } 
-    catch (e) {
-      setOwners([])
+    } catch (e) {
+      setOwners([]);
     }
   };
 

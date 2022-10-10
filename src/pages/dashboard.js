@@ -15,35 +15,35 @@ export default function CreatorDashboard() {
     loadProjects();
   }, [address]);
   async function loadProjects() {
-    try{
-    const projectsRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/project/?` +
-        new URLSearchParams({
-          owner: address ? address : '',
-        }),
-      {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
-        },
-      }
-    );
-    const projectData = await projectsRes.json();
-    for (let i = 0; i < projectData.length; i++) {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${projectData[i].url}`
+    try {
+      const projectsRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/?` +
+          new URLSearchParams({
+            owner: address ? address : '',
+          }),
+        {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded',
+          },
+        }
       );
-      const nftsData = await res.json();
-      let a = projectsNFTs;
-      a[i] = nftsData;
-      setProjectsNFTs(a);
+      const projectData = await projectsRes.json();
+      for (let i = 0; i < projectData.length; i++) {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${projectData[i].url}`
+        );
+        const nftsData = await res.json();
+        let a = projectsNFTs;
+        a[i] = nftsData;
+        setProjectsNFTs(a);
+      }
+      setProjects(Object.keys(projectData).length !== 0 ? projectData : []);
+      setLoadingState('loaded');
+    } catch (e) {
+      setProjects([]);
+      setLoadingState('loaded');
     }
-    setProjects(Object.keys(projectData).length !== 0 ? projectData : []);
-    setLoadingState('loaded');
-  } catch (e) {
-    setProjects([])
-    setLoadingState('loaded')
-  }
   }
 
   if (loadingState === 'loaded' && !projects.length)

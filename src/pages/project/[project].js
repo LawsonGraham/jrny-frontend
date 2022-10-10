@@ -28,24 +28,24 @@ function Project({ nftsData, projectData }) {
 
   async function investInProject(inputPrice) {
     try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/patchNFTPrice`,
-      {
-        method: 'PATCH',
-        body: new URLSearchParams({
-          address: NFT.address,
-          price: inputPrice,
-        }),
-        headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((json) => console.log(json));
-    console.log('complete');
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/patchNFTPrice`,
+        {
+          method: 'PATCH',
+          body: new URLSearchParams({
+            address: NFT.address,
+            price: inputPrice,
+          }),
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded',
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+      console.log('complete');
     } catch (e) {
-      console.log('cannot update price')
+      console.log('cannot update price');
     }
   }
 
@@ -132,10 +132,9 @@ function Project({ nftsData, projectData }) {
                       <p className="text-l">
                         {' '}
                         &#40;$
-                        {inputPriceChange * .532 < 10000
-                          ? Math.round(inputPriceChange * .532 *100) / 100
-                          : Math.round((inputPriceChange * .532) * 100) /
-                              100 +
+                        {inputPriceChange * 0.532 < 10000
+                          ? Math.round(inputPriceChange * 0.532 * 100) / 100
+                          : Math.round(inputPriceChange * 0.532 * 100) / 100 +
                             'K'}
                         &#41;
                       </p>
@@ -244,15 +243,15 @@ export async function getServerSideProps(ctx) {
   // Fetch data from external API
   const projectURL = ctx.query.project;
   try {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${projectURL}`
-  );
-  const nftsData = await res.json();
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${projectURL}`
+    );
+    const nftsData = await res.json();
 
-  const projectRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${projectURL}`
-  );
-  const projectData = await projectRes.json();
+    const projectRes = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${projectURL}`
+    );
+    const projectData = await projectRes.json();
   } catch (e) {
     const nftsData = [];
     const projectData = [];

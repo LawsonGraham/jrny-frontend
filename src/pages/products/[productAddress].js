@@ -32,36 +32,36 @@ function Product() {
 
   async function loadData() {
     try {
-    const nftRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/product/${productAddress}`
-    );
-    const nftData = await nftRes.json();
-    setProduct(nftData);
-    console.log(Product);
-    const projRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${nftData.projecturl}`
-    );
-    const projectData = await projRes.json();
-    setProjectData(projectData);
-    const projNFTsRes = await fetch(
-      // add project/${nftData.projecturl} to have just the project's nft
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${nftData.projecturl}`
-    );
-    const projectNFTs = await projNFTsRes.json();
-    setProjectNFTs(projectNFTs.slice(0, 8));
-    const projProductsRes = await fetch(
-      // add project/${nftData.projecturl} to have just the project's nft
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/product/project/${nftData.projecturl}`
-    );
-    const projectProducts = await projProductsRes.json();
-    setProjectProducts(projectProducts.slice(0, 8));
-    setLoadingState('loaded');
-  } catch (e) {
-    setProduct({});
-    setProjectData([]);
-    setProjectNFTs([]);
-    setProjectProducts([]);
-  }
+      const nftRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/product/${productAddress}`
+      );
+      const nftData = await nftRes.json();
+      setProduct(nftData);
+      console.log(Product);
+      const projRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${nftData.projecturl}`
+      );
+      const projectData = await projRes.json();
+      setProjectData(projectData);
+      const projNFTsRes = await fetch(
+        // add project/${nftData.projecturl} to have just the project's nft
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${nftData.projecturl}`
+      );
+      const projectNFTs = await projNFTsRes.json();
+      setProjectNFTs(projectNFTs.slice(0, 8));
+      const projProductsRes = await fetch(
+        // add project/${nftData.projecturl} to have just the project's nft
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/product/project/${nftData.projecturl}`
+      );
+      const projectProducts = await projProductsRes.json();
+      setProjectProducts(projectProducts.slice(0, 8));
+      setLoadingState('loaded');
+    } catch (e) {
+      setProduct({});
+      setProjectData([]);
+      setProjectNFTs([]);
+      setProjectProducts([]);
+    }
   }
 
   async function updateProductPrice(inputPrice) {
@@ -169,7 +169,8 @@ function Product() {
                             <p className="text-l">
                               {' '}
                               &#40;$
-                              {Math.round(Product.price * .532 * 100) / 100}&#41;
+                              {Math.round(Product.price * 0.532 * 100) / 100}
+                              &#41;
                             </p>
                           </div>
                         </div>
@@ -205,8 +206,7 @@ function Product() {
                             <p className="text-l">
                               {' '}
                               &#40;$
-                              {Math.round(inputPriceChange * .532 * 100) /
-                                100}
+                              {Math.round(inputPriceChange * 0.532 * 100) / 100}
                               &#41;
                             </p>
                           </div>
@@ -347,27 +347,28 @@ function Product() {
                     <div className="flex flex-col-reverse p-1 text-fontBG">
                       <p className="text-l">
                         {' '}
-                        &#40;${Math.round(Product.price * .532 * 100) / 100}&#41;
+                        &#40;${Math.round(Product.price * 0.532 * 100) / 100}
+                        &#41;
                       </p>
                     </div>
                   </div>
-                    <div
-                      name="pricing-offer-buttons"
-                      className="flex row p-2 space-x-2"
+                  <div
+                    name="pricing-offer-buttons"
+                    className="flex row p-2 space-x-2"
+                  >
+                    <pinkButton
+                      name="pricing-buy-now"
+                      className="mt-4 p-2 rounded hover:scale-[103%]"
                     >
-                      <pinkButton
-                        name="pricing-buy-now"
-                        className="mt-4 p-2 rounded hover:scale-[103%]"
-                      >
-                        Order Now
-                      </pinkButton>
-                      <button
-                        name="pricing-make-offer"
-                        className="mt-4 w-full bg-white text-textPurple font-bold py-2 px-12 rounded border shadow hover:scale-[103%] hover:bg-gray-100"
-                      >
-                        Add To Cart
-                      </button>
-                    </div>
+                      Order Now
+                    </pinkButton>
+                    <button
+                      name="pricing-make-offer"
+                      className="mt-4 w-full bg-white text-textPurple font-bold py-2 px-12 rounded border shadow hover:scale-[103%] hover:bg-gray-100"
+                    >
+                      Add To Cart
+                    </button>
+                  </div>
                 </div>
               </section>
               <section
@@ -380,30 +381,30 @@ function Product() {
                 >
                   Product Promotional NFTs
                 </button>
-                <div className='grid grid-cols-3'>
-                {projectNFTs.slice(0,3).map((nft, i) => (
-                      <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
-                        <div
-                          key={i}
-                          className="flex flex-col-reverse shadow rounded-xl overflow-hidden object-contain bg-bgSubsection"
-                        >
-                          <div className="p-4 basis-[1/6]">
-                            <p
-                              style={{ height: '32px' }}
-                              className="text-xl text-center font-semibold line-clamp-1"
-                            >
-                              {nft.nftName}
-                            </p>
-                          </div>
-
-                          <img
-                            src={nft.imageLink}
-                            className="object-fill mx-auto hover:scale-110 rounded-xl cursor-pointer w-full h-[85%]"
-                          />
+                <div className="grid grid-cols-3">
+                  {projectNFTs.slice(0, 3).map((nft, i) => (
+                    <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
+                      <div
+                        key={i}
+                        className="flex flex-col-reverse shadow rounded-xl overflow-hidden object-contain bg-bgSubsection"
+                      >
+                        <div className="p-4 basis-[1/6]">
+                          <p
+                            style={{ height: '32px' }}
+                            className="text-xl text-center font-semibold line-clamp-1"
+                          >
+                            {nft.nftName}
+                          </p>
                         </div>
-                      </Link>
-                    ))}
-                    </div>
+
+                        <img
+                          src={nft.imageLink}
+                          className="object-fill mx-auto hover:scale-110 rounded-xl cursor-pointer w-full h-[85%]"
+                        />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </section>
             </div>
           </div>
@@ -420,7 +421,7 @@ function Product() {
           </button>
           {showProjProducts && (
             <div className="grid grid-cols-4 gap-4 p-4 bg-bgSubsection">
-              {projectProducts.slice(0,4).map((nft, i) => (
+              {projectProducts.slice(0, 4).map((nft, i) => (
                 <Link href={{ pathname: `/products/${nft.address}` }} key={i}>
                   <div
                     key={i}

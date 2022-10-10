@@ -40,43 +40,43 @@ function Projects() {
 
   async function filterProjects() {
     try {
-    const projectsRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/project/?` +
-        new URLSearchParams({
-          location: filter[0] ? filter[0] : '',
-          raiseGoal: filter[1] ? filter[1] : '',
-          endDate: filter[2] ? filter[2] : '',
-        }),
-      {
-        method: 'GET',
-        query: {
-          location: filter[0],
-          raiseGoal: filter[1],
-          endDate: filter[2],
-        },
-        headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
-        },
-      }
-    );
-    const projectData = await projectsRes.json();
-    console.log(projectData);
-    setProjects(Object.keys(projectData).length !== 0 ? projectData : []);
-    setLoadingState('loaded');
+      const projectsRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/?` +
+          new URLSearchParams({
+            location: filter[0] ? filter[0] : '',
+            raiseGoal: filter[1] ? filter[1] : '',
+            endDate: filter[2] ? filter[2] : '',
+          }),
+        {
+          method: 'GET',
+          query: {
+            location: filter[0],
+            raiseGoal: filter[1],
+            endDate: filter[2],
+          },
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded',
+          },
+        }
+      );
+      const projectData = await projectsRes.json();
+      console.log(projectData);
+      setProjects(Object.keys(projectData).length !== 0 ? projectData : []);
+      setLoadingState('loaded');
     } catch (e) {
-      setProjects([])
-      setLoadingState('loaded')
+      setProjects([]);
+      setLoadingState('loaded');
     }
   }
 
   async function loadProjects() {
     try {
-    const projectsRes = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/project/`
-    );
-    const projectData = await projectsRes.json();
-    setProjects(Object.keys(projectData).length !== 0 ? projectData : []);
-    setLoadingState('loaded');
+      const projectsRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/`
+      );
+      const projectData = await projectsRes.json();
+      setProjects(Object.keys(projectData).length !== 0 ? projectData : []);
+      setLoadingState('loaded');
     } catch (e) {
       setProjects([]);
       setLoadingState('loaded');
