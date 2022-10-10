@@ -1,10 +1,8 @@
-# <img src="src/public/stock.png" alt="Balancer" height="128px">
+# <img src="src/public/stock.png" alt="JRNY" height="128px">
 
 # JRNY V1 Frontend
 
 [![Docs](https://img.shields.io/badge/docs-%F0%9F%93%84-blue)](--LINK FOR JRNY WHITEPAPER--)
-[![CI Status](https://github.com/balancer-labs/balancer-v2-monorepo/workflows/CI/badge.svg)](https://github.com/balancer-labs/balancer-v2-monorepo/actions)
-[![License](https://img.shields.io/badge/License-GPLv3-green.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 This repository contains the Frontend for JRNY's V1 MVP, including the Order Fulfillment product and DAO investment pages.
 
