@@ -17,6 +17,8 @@ Active development occurs in this repository, which means the some aspects of th
 This repository uses npm as a package manager, so to clone this repo run:
 
 ```
+git clone https://github.com/LawsonGraham/jrny-frontend.git
+cd jrny-frontend
 npm install
 cp .env.example .env.local
 ```
