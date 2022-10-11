@@ -2,11 +2,11 @@
 
 # JRNY V1 Frontend
 
-[![Docs](https://img.shields.io/badge/docs-%F0%9F%93%84-blue)]([Tetra-White Paper-Wave 4-Sustainability.pdf](https://github.com/LawsonGraham/jrny-frontend/files/9750371/Tetra-White.Paper-Wave.4-Sustainability.pdf))
+[![Docs](https://img.shields.io/badge/docs-%F0%9F%93%84-blue)](https://github.com/LawsonGraham/jrny-frontend/files/9750371/Tetra-White.Paper-Wave.4-Sustainability.pdf)
 
 This repository contains the Frontend for JRNY's V1 MVP, including the Order Fulfillment product and DAO investment pages.
 
-For a high-level introduction to JRNY, see [The JRNY Greenpaper]([Tetra-White Paper-Wave 4-Sustainability.pdf](https://github.com/LawsonGraham/jrny-frontend/files/9750371/Tetra-White.Paper-Wave.4-Sustainability.pdf)).
+For a high-level introduction to JRNY, see [The JRNY Greenpaper](https://github.com/LawsonGraham/jrny-frontend/files/9750371/Tetra-White.Paper-Wave.4-Sustainability.pdf).
 
 ## Structure
 
