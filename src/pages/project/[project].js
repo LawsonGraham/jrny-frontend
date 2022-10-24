@@ -13,18 +13,20 @@ function Project({ nftsData, projectData }) {
   const [inputPriceChange, setInputPriceChange] = useState('');
   const [active, setActive] = useState('ACTIVE');
 
-  // useEffect(() => {
-  //   loadNfts();
-  // }, []);
+  useEffect(() => {
+    loadNfts();
+  }, []);
 
-  // async function loadNfts() {
-  //   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/nft/boredapesyachtclub`);
-  //   const arr = await res.json();
+  async function loadNfts() {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/boredapesyachtclub`
+    );
+    const arr = await res.json();
 
-  //   console.log(arr)
-  //   setProjectNFTs(arr);
-  //   setLoadingState('loaded');
-  // }
+    console.log(arr);
+    setProjectNFTs(arr);
+    setLoadingState('loaded');
+  }
 
   async function investInProject(inputPrice) {
     try {
@@ -242,20 +244,19 @@ function Project({ nftsData, projectData }) {
 export async function getServerSideProps(ctx) {
   // Fetch data from external API
   const projectURL = ctx.query.project;
+  let nftsData = [];
+  let projectData = [];
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${projectURL}`
     );
-    const nftsData = await res.json();
+    nftsData = await res.json();
 
     const projectRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${projectURL}`
     );
-    const projectData = await projectRes.json();
-  } catch (e) {
-    const nftsData = [];
-    const projectData = [];
-  }
+    projectData = await projectRes.json();
+  } catch (e) {}
   // Pass data to the page via props
   return { props: { nftsData, projectData } };
 }
