@@ -2,7 +2,6 @@
 import '../styles/globals.css';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import { CookiesProvider } from 'react-cookie';
 import '@rainbow-me/rainbowkit/styles.css';
 import { lightTheme } from '@rainbow-me/rainbowkit';
 
@@ -38,11 +37,9 @@ function MyApp({ Component, pageProps }) {
           borderRadius: 'large',
         })}
       >
-        <CookiesProvider>
-          <Nav />
-          <Component {...pageProps} />
-          <Footer />
-        </CookiesProvider>
+        <Nav />
+        <Component {...pageProps} />
+        <Footer />
       </RainbowKitProvider>
     </WagmiConfig>
   );

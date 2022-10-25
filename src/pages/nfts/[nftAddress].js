@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import List from '../../components/List';
 import { useAccount } from 'wagmi';
+import * as API_CONSTANTS from '../constants/api';
 
 function NFT() {
   const router = useRouter();
-  const { nftAddress } = router.query;
   const [NFT, setNFT] = useState([]);
   const [projectData, setProjectData] = useState([]);
   const [projectNFTs, setProjectNFTs] = useState([]);
@@ -17,9 +17,11 @@ function NFT() {
   const [showChangePrice, setShowChangePrice] = useState(false);
   const [showEmptyPriceError, setShowEmptyPriceError] = useState(false);
   const [inputPriceChange, setInputPriceChange] = useState('');
-  const { address } = useAccount();
-
   const [loadingState, setLoadingState] = useState('not-loaded');
+
+  const { address } = useAccount();
+  const { nftAddress } = router.query;
+
   useEffect(() => {
     loadData();
   }, [nftAddress, loadingState]);
@@ -34,7 +36,7 @@ function NFT() {
       const nftData = await nftRes.json();
       setNFT(nftData);
       const projRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/${nftData.projecturl}`
+        `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.projectRoute}/${nftData.projecturl}`
       );
       const projectData = await projRes.json();
       setProjectData(projectData);

@@ -1,48 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import ProgressBar from '../../components/ProgressBar';
 import InfoList from '../../components/InfoList';
 
 function Project({ nftsData, projectData }) {
-  const [projectNFTs, setProjectNFTs] = useState(nftsData);
-  const [project, setProject] = useState(projectData);
-  const [loadingState, setLoadingState] = useState('not-loaded');
-  const [showProjNFTs, setShowProjNFTs] = useState(true);
-  const [showChangePrice, setShowChangePrice] = useState(false);
-  const [showEmptyPriceError, setShowEmptyPriceError] = useState(false);
   const [inputPriceChange, setInputPriceChange] = useState('');
-  const [active, setActive] = useState('ACTIVE');
 
-  useEffect(() => {
-    loadNfts();
-  }, []);
-
-  async function loadNfts() {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/boredapesyachtclub`
-    );
-    const arr = await res.json();
-
-    console.log(arr);
-    setProjectNFTs(arr);
-    setLoadingState('loaded');
-  }
+  const active = 'ACTIVE';
+  const project = projectData;
 
   async function investInProject(inputPrice) {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/patchNFTPrice`,
-        {
-          method: 'PATCH',
-          body: new URLSearchParams({
-            address: NFT.address,
-            price: inputPrice,
-          }),
-          headers: {
-            'Content-type': 'application/x-www-form-urlencoded',
-          },
-        }
-      )
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/nft/patchNFTPrice`, {
+        method: 'PATCH',
+        body: new URLSearchParams({
+          address: NFT.address,
+          price: inputPrice,
+        }),
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded',
+        },
+      })
         .then((response) => response.json())
         .then((json) => console.log(json));
       console.log('complete');
@@ -50,13 +28,6 @@ function Project({ nftsData, projectData }) {
       console.log('cannot update price');
     }
   }
-
-  if (
-    loadingState === 'loaded' &&
-    !projectNFTs &&
-    Object.keys(projectNFTs).length === 0
-  )
-    return <h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>;
 
   return (
     <div className="flex flex-col justify-center mx-default">
@@ -145,14 +116,8 @@ function Project({ nftsData, projectData }) {
                   <pinkButton
                     className="ml-2 px-4 py-0"
                     onClick={() => {
-                      if (inputPriceChange) {
-                        setShowChangePrice(false);
-                        investInProject(inputPriceChange);
-                        setShowEmptyPriceError(false);
-                        setInputPriceChange('');
-                      } else {
-                        setShowEmptyPriceError(true);
-                      }
+                      investInProject(inputPriceChange);
+                      setInputPriceChange('');
                     }}
                   >
                     Invest In Real Time
@@ -206,32 +171,30 @@ function Project({ nftsData, projectData }) {
                     </p>
                   </div>
                 </div>
-                {showProjNFTs && (
-                  <div className="grid grid-cols-3 gap-4 p-4 bg-bgPageDefault">
-                    {nftsData.map((nft, i) => (
-                      <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
-                        <div
-                          key={i}
-                          className="flex flex-col-reverse shadow rounded-xl overflow-hidden object-contain bg-bgSubsection"
-                        >
-                          <div className="p-4 basis-[1/6]">
-                            <p
-                              style={{ height: '32px' }}
-                              className="text-xl text-center font-semibold line-clamp-1"
-                            >
-                              {nft.nftName}
-                            </p>
-                          </div>
-
-                          <img
-                            src={nft.imageLink}
-                            className="object-fill mx-auto hover:scale-110 rounded-xl cursor-pointer w-full h-[85%]"
-                          />
+                <div className="grid grid-cols-3 gap-4 p-4 bg-bgPageDefault">
+                  {nftsData.map((nft, i) => (
+                    <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
+                      <div
+                        key={i}
+                        className="flex flex-col-reverse shadow rounded-xl overflow-hidden object-contain bg-bgSubsection"
+                      >
+                        <div className="p-4 basis-[1/6]">
+                          <p
+                            style={{ height: '32px' }}
+                            className="text-xl text-center font-semibold line-clamp-1"
+                          >
+                            {nft.nftName}
+                          </p>
                         </div>
-                      </Link>
-                    ))}
-                  </div>
-                )}
+
+                        <img
+                          src={nft.imageLink}
+                          className="object-fill mx-auto hover:scale-110 rounded-xl cursor-pointer w-full h-[85%]"
+                        />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           </section>

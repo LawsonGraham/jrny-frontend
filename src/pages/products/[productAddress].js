@@ -7,6 +7,7 @@ import axios from 'axios';
 import Web3Modal from 'web3modal';
 import List from '../../components/List';
 import { useAccount } from 'wagmi';
+import * as API_CONSTANTS from '../../constants/api';
 
 function Product() {
   const router = useRouter();
@@ -33,7 +34,7 @@ function Product() {
   async function loadData() {
     try {
       const nftRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/product/${productAddress}`
+        `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.productRoute}/${productAddress}`
       );
       const nftData = await nftRes.json();
       setProduct(nftData);

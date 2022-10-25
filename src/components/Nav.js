@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
+import * as API_CONSTANTS from '../constants/api';
 
 export default function Nav() {
   const [owners, setOwners] = useState([]);
@@ -11,7 +12,7 @@ export default function Nav() {
   const getOwners = async () => {
     try {
       const ownersRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/`
+        `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.projectRoute}/`
       );
       const ownersData = await ownersRes.json();
       let ownersArray = [];

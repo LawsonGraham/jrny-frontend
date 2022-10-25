@@ -2,22 +2,13 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import SearchDropdown from '../components/SearchDropdown';
+import * as Constants from '../constants/products';
+import * as API_CONSTANTS from '../constants/api';
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [loadingState, setLoadingState] = useState('not-loaded');
   const [filter, setFilter] = useState([,]);
-  const nameToURL = {
-    Stiizy: 'stiizy',
-    Cookies: 'cookies',
-    'Khalifa Kush': 'khalifakush',
-    Wonderbrett: 'wonderbrett',
-    Jeeter: 'jeeter',
-    Viola: 'viola',
-    'Glass House Farms': 'glasshousefarms',
-    'Uncle Arnies': 'unclearnies',
-    OnePlant: 'oneplant',
-  };
 
   useEffect(() => {
     loadProducts();
@@ -32,15 +23,17 @@ function Products() {
   async function filterProducts() {
     try {
       const productsRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/product/?` +
+        `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.productRoute}/?` +
           new URLSearchParams({
-            projecturl: nameToURL[filter[0]] ? nameToURL[filter[0]] : '',
+            producturl: Constants.nameToURL[filter[0]]
+              ? Constants.nameToURL[filter[0]]
+              : '',
             price: filter[1] ? filter[1] : '',
           }),
         {
           method: 'GET',
           query: {
-            projecturl: filter[0],
+            producturl: filter[0],
             price: filter[1],
           },
           headers: {
@@ -61,7 +54,7 @@ function Products() {
   async function loadProducts() {
     try {
       const productsRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/product/`
+        `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.productRoute}/`
       );
       const productData = await productsRes.json();
       setProducts(Object.keys(productData).length !== 0 ? productData : []);

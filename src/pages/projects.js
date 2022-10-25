@@ -1,36 +1,18 @@
 /* pages/projects.js */
-import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import axios from 'axios';
-import Web3Modal from 'web3modal';
-import { useRouter } from 'next/router';
-import { useCookies, withCookies } from 'react-cookie';
 import SearchDropdown from '../components/SearchDropdown';
 import ProgressBar from '../components/ProgressBar';
+import * as API_CONSTANTS from '../constants/api';
 
 function Projects() {
-  const [filters, setFilters] = useState([]);
-
   const [projects, setProjects] = useState([]);
-  const [account, setAccount] = useState('');
   const [loadingState, setLoadingState] = useState('not-loaded');
-  const router = useRouter();
-  const [cookies, setCookie] = useCookies();
-  const [loggedIn, setLoggedIn] = useState(false);
   const [filter, setFilter] = useState([, ,]);
 
   useEffect(() => {
-    setLoggedIn(cookies.loggedIn);
-  }, [cookies.loggedIn]);
-
-  useEffect(() => {
-    if (loggedIn) readAccount();
-  }, [account, loadingState]);
-
-  useEffect(() => {
     loadProjects();
-  }, [account, loadingState, loggedIn]);
+  }, [loadingState]);
 
   async function updateFilter(field, i) {
     var f = filter;
@@ -41,7 +23,7 @@ function Projects() {
   async function filterProjects() {
     try {
       const projectsRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/?` +
+        `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.projectRoute}/?` +
           new URLSearchParams({
             location: filter[0] ? filter[0] : '',
             raiseGoal: filter[1] ? filter[1] : '',
@@ -72,7 +54,7 @@ function Projects() {
   async function loadProjects() {
     try {
       const projectsRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/`
+        `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.projectRoute}/`
       );
       const projectData = await projectsRes.json();
       setProjects(Object.keys(projectData).length !== 0 ? projectData : []);
@@ -82,16 +64,6 @@ function Projects() {
       setLoadingState('loaded');
     }
   }
-
-  const readAccount = async () => {
-    if (window.ethereum) {
-      // check if i have metamask installed or not
-      let accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      });
-      setAccount(accounts[0]);
-    }
-  };
 
   return (
     <div className="flex justify-center flex-col mx-default">
@@ -231,4 +203,4 @@ function Projects() {
   );
 }
 
-export default withCookies(Projects);
+export default Projects;

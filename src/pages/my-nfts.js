@@ -1,13 +1,11 @@
 /* pages/my-nfts.js */
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useAccount } from 'wagmi';
+import * as API_CONSTANTS from '../constants/api';
 
 function MyAssets() {
   const [nfts, setNfts] = useState([]);
-  const [loadingState, setLoadingState] = useState('not-loaded');
-  const router = useRouter();
   const { address } = useAccount();
 
   async function loadNFTs() {
@@ -16,7 +14,7 @@ function MyAssets() {
     }
     try {
       const nftRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/owner/?` +
+        `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.nftRoute}/owner/?` +
           new URLSearchParams({
             owner: address ? address : '',
           }),
@@ -29,29 +27,14 @@ function MyAssets() {
       );
       const nftData = await nftRes.json();
       setNfts(Object.keys(nftData).length !== 0 ? nftData : []);
-      setLoadingState('loaded');
     } catch (e) {
       setNfts([]);
-      setLoadingState('loaded');
     }
   }
 
   useEffect(() => {
     loadNFTs();
   }, [address]);
-
-  // if (!address) {
-  //   return (
-  //     <h1 className="py-10 px-20 text-3xl">Please Connect Your Account</h1>
-  //   );
-  // }
-
-  // if (loadingState === 'loaded' && Object.keys(nfts).length === 0)
-  //   return (
-  //     <h1 className="py-10 px-20 text-3xl">
-  //       No NFTs owned
-  //     </h1>
-  //   );
 
   return (
     <div className="flex justify-center mx-default">

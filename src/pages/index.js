@@ -1,23 +1,16 @@
-import { ethers } from 'ethers';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
-import axios from 'axios';
-import Web3Modal from 'web3modal';
-import { marketplaceAddress } from '../config';
 import deedCommunity from '../public/deedCommunity.png';
 import purchase from '../public/purchase.png';
 import stock from '../public/stock.png';
 import community from '../public/community.png';
-import ProgressBar from '../components/ProgressBar';
 import MyCarousel from '../components/MyCarousel';
+import * as API_CONSTANTS from '../constants/api';
 
 function Home({ data }) {
   const projects = data;
-  const [loadingState, setLoadingState] = useState('not-loaded');
 
-  if (loadingState === 'loaded' && !projects.length)
+  if (!projects.length)
     return <h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>;
 
   return (
@@ -125,7 +118,9 @@ export async function getServerSideProps() {
   // Fetch data from external API
   let data = [];
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/project/`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.projectRoute}/`
+    );
     data = await res.json();
   } catch (e) {}
 

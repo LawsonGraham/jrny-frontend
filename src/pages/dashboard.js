@@ -4,6 +4,7 @@ import ProgressBar from '../components/ProgressBar';
 import NftList from '../components/NftList';
 import Link from 'next/link';
 import { useAccount } from 'wagmi';
+import * as API_CONSTANTS from '../constants/api';
 
 export default function CreatorDashboard() {
   const [projects, setProjects] = useState([]);
@@ -14,10 +15,11 @@ export default function CreatorDashboard() {
   useEffect(() => {
     loadProjects();
   }, [address]);
+
   async function loadProjects() {
     try {
       const projectsRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/project/?` +
+        `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.projectRoute}/?` +
           new URLSearchParams({
             owner: address ? address : '',
           }),
@@ -31,12 +33,12 @@ export default function CreatorDashboard() {
       const projectData = await projectsRes.json();
       for (let i = 0; i < projectData.length; i++) {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${projectData[i].url}`
+          `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.nftRoute}/project/${projectData[i].url}`
         );
         const nftsData = await res.json();
-        let a = projectsNFTs;
-        a[i] = nftsData;
-        setProjectsNFTs(a);
+        let nfts = projectsNFTs;
+        nfts[i] = nftsData;
+        setProjectsNFTs(nfts);
       }
       setProjects(Object.keys(projectData).length !== 0 ? projectData : []);
       setLoadingState('loaded');
