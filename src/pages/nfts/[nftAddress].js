@@ -4,16 +4,13 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import List from '../../components/List';
 import { useAccount } from 'wagmi';
-import * as API_CONSTANTS from '../constants/api';
+import * as API_CONSTANTS from '../../constants/api';
 
 function NFT() {
   const router = useRouter();
   const [NFT, setNFT] = useState([]);
   const [projectData, setProjectData] = useState([]);
   const [projectNFTs, setProjectNFTs] = useState([]);
-  const [showProjNFTs, setShowProjNFTs] = useState(true);
-  const [showDescription, setShowDescription] = useState(true);
-  const [showTxns, setShowTxns] = useState(true);
   const [showChangePrice, setShowChangePrice] = useState(false);
   const [showEmptyPriceError, setShowEmptyPriceError] = useState(false);
   const [inputPriceChange, setInputPriceChange] = useState('');
@@ -29,30 +26,25 @@ function NFT() {
   const cancelButtonRef = useRef(null);
 
   async function loadData() {
-    try {
-      const nftRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/${nftAddress}`
-      );
-      const nftData = await nftRes.json();
-      setNFT(nftData);
-      const projRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.projectRoute}/${nftData.projecturl}`
-      );
-      const projectData = await projRes.json();
-      setProjectData(projectData);
-      const projNFTsRes = await fetch(
-        // add project/${nftData.projecturl} to have just the project's nft
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${nftData.projecturl}`
-      );
-      const projectNFTs = await projNFTsRes.json();
-      setProjectNFTs(projectNFTs.slice(0, 8));
-      setLoadingState('loaded');
-    } catch (e) {
-      setNFT({});
-      setProjectData([]);
-      setProjectNFTs([]);
-      setLoadingState('loaded');
-    }
+    const nftRes = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/${nftAddress}`
+    );
+    const nftData = await nftRes.json();
+    setNFT(nftData);
+    const projRes = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}${API_CONSTANTS.projectRoute}/${nftData.projecturl}`
+    );
+    const projectData = await projRes.json();
+    console.log(projectData);
+    setProjectData(projectData);
+    const projNFTsRes = await fetch(
+      // add project/${nftData.projecturl} to have just the project's nft
+      `${process.env.NEXT_PUBLIC_API_URL}/v1/nft/project/${nftData.projecturl}`
+    );
+    const projectNFTs = await projNFTsRes.json();
+    console.log(projectNFTs);
+    setProjectNFTs(projectNFTs.slice(0, 8));
+    setLoadingState('loaded');
   }
 
   async function updateNFTPrice(inputPrice) {
@@ -262,17 +254,12 @@ function NFT() {
                 name="left-panel-upper-description"
                 className="border shadow rounded-xl overflow-hidden content-center"
               >
-                <button
-                  className="p-3 font-bold bg-bgHeader w-full text-xl"
-                  onClick={() => setShowDescription(!showDescription)}
-                >
+                <button className="p-3 font-bold bg-bgHeader w-full text-xl">
                   Project Description
                 </button>
-                {showDescription && (
-                  <p className="p-3 bg-bgSubsection line-clamp-5">
-                    {projectData.projectInfo}
-                  </p>
-                )}
+                <p className="p-3 bg-bgSubsection line-clamp-5">
+                  {projectData.projectInfo}
+                </p>
               </div>
             </div>
             <div
@@ -386,13 +373,10 @@ function NFT() {
                 name="right-panel-upper-tx-history"
                 className="border shadow rounded-xl overflow-hidden content-center"
               >
-                <button
-                  className="p-3 font-bold bg-bgHeader w-full text-xl"
-                  onClick={() => setShowTxns(!showTxns)}
-                >
+                <button className="p-3 font-bold bg-bgHeader w-full text-xl">
                   Previous Transactions
                 </button>
-                {showTxns && Object.keys(NFT).length !== 0 && (
+                {Object.keys(NFT).length !== 0 && (
                   <div className="flex flex-col bg-bgSubsection">
                     <div className="flex flex-row divide-x-3 justify-between block px-4 py-2 border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 cursor-pointer">
                       <div className="basis-1/3">
@@ -416,37 +400,32 @@ function NFT() {
           name="panel-lower"
           className="border shadow rounded-xl overflow-hidden content-center mx-2"
         >
-          <button
-            className="p-3 font-bold bg-bgHeader w-full text-xl"
-            onClick={() => setShowProjNFTs(!showProjNFTs)}
-          >
+          <button className="p-3 font-bold bg-bgHeader w-full text-xl">
             More NFTs From {projectData.name}
           </button>
-          {showProjNFTs && (
-            <div className="grid grid-cols-4 gap-4 p-4 bg-bgSubsection">
-              {projectNFTs.slice(0, 4).map((nft, i) => (
-                <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
-                  <div
-                    key={i}
-                    className=" shadow rounded-xl overflow-hidden object-contain bg-bgPageDefault"
-                  >
-                    <img
-                      src={nft.imageLink}
-                      className="object-cover mx-auto hover:scale-110 rounded-xl w-full h-[75%]"
-                    />
-                    <div className="p-4">
-                      <p
-                        style={{ height: '32px' }}
-                        className="text-xl font-semibold text-center"
-                      >
-                        {nft.nftName}
-                      </p>
-                    </div>
+          <div className="grid grid-cols-4 gap-4 p-4 bg-bgSubsection">
+            {projectNFTs.slice(0, 4).map((nft, i) => (
+              <Link href={{ pathname: `/nfts/${nft.address}` }} key={i}>
+                <div
+                  key={i}
+                  className=" shadow rounded-xl overflow-hidden object-contain bg-bgPageDefault"
+                >
+                  <img
+                    src={nft.imageLink}
+                    className="object-cover mx-auto hover:scale-110 rounded-xl w-full h-[75%]"
+                  />
+                  <div className="p-4">
+                    <p
+                      style={{ height: '32px' }}
+                      className="text-xl font-semibold text-center"
+                    >
+                      {nft.nftName}
+                    </p>
                   </div>
-                </Link>
-              ))}
-            </div>
-          )}
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </>
